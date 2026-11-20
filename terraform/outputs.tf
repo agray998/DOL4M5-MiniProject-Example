@@ -27,11 +27,13 @@ resource "local_file" "ansible_inventory" {
           ${module.ci_ec2.instance_ip}:
             ansible_user: ubuntu
             ansible_ssh_private_key_file: ${path.root}/ci_key.pem
+            ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
       deploy_servers:
         hosts:
           ${module.deploy_ec2.instance_ip}:
             ansible_user: ubuntu
             ansible_ssh_private_key_file: ${path.root}/deploy_key.pem
+            ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
   EOF
 }
 
