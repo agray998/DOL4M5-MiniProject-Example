@@ -4,7 +4,7 @@
 - name: checkout repo
   git:
     repo: https://gitlab.com/Reece-Elder/devops-m5-nodeproject
-    dest: {{ app_dir }}
+    dest: "{{ app_dir }}"
 
 - name: create app service file
   template:

@@ -18,8 +18,8 @@
     name: jenkins
     types: deb
     uris: https://pkg.jenkins.io/debian-stable
-    components:
-    - binary
+    suites:
+    - binary/
     signed_by: https://pkg.jenkins.io/debian-stable/jenkins.io-2026.key
 
 - name: install Jenkins
