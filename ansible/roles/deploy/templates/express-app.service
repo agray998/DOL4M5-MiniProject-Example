@@ -1,0 +1,10 @@
+[Unit]
+  Description=Simple Express App
+
+[Service]
+  WorkingDirectory={{ app_dir }}
+  ExecStartPre=npm install
+  ExecStart=node index.js
+
+[Install]
+  WantedBy=multi-user.target

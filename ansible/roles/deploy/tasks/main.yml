@@ -1,0 +1,17 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for deploy
+- name: checkout repo
+  git:
+    repo: https://gitlab.com/Reece-Elder/devops-m5-nodeproject
+    dest: {{ app_dir }}
+
+- name: create app service file
+  template:
+    dest: /etc/systemd/system/express-app.service
+    src: express-app.service
+
+- name: start app service
+  service:
+    name: express-app
+    state: started

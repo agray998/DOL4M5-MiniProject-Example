@@ -1,0 +1,67 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for ci
+- name: install deps
+  apt:
+    name:
+    - wget
+    - unzip
+    - curl
+    - openjdk-21-jdk
+    - fontconfig
+    - software-properties-common
+    state: present
+    update_cache: true
+
+- name: configure jenkins repo
+  deb822_repository:
+    name: jenkins
+    types: deb
+    uris: https://pkg.jenkins.io/debian-stable
+    components:
+    - binary
+    signed_by: https://pkg.jenkins.io/debian-stable/jenkins.io-2026.key
+
+- name: install Jenkins
+  apt:
+    name: jenkins
+    state: present
+    update_cache: true
+
+- name: give Jenkins sudo
+  lineinfile:
+    path: /etc/sudoers.d/jenkins
+    create: true
+    state: present
+    line: "jenkins  ALL=(ALL:ALL) NOPASSWD:ALL"
+  notify: restart jenkins
+
+- name: configure docker repo
+  deb822_repository:
+    name: docker
+    types: deb
+    uris: https://download.docker.com/linux/ubuntu
+    suites:
+    - resolute
+    components:
+    - stable
+    signed_by: https://download.docker.com/linux/ubuntu/gpg
+
+- name: install docker
+  apt:
+    update_cache: true
+    name:
+    - docker-ce
+    - docker-ce-cli
+    - containerd.io
+    - docker-compose-plugin
+    - docker-buildx-plugin
+    state: present
+
+- name: add Jenkins to docker group
+  user:
+    append: true
+    groups:
+    - docker
+    name: jenkins
+  notify: restart jenkins

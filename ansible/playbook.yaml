@@ -1,0 +1,11 @@
+- hosts: ci_servers
+  become: true
+  roles:
+  - common
+  - ci
+
+- hosts: deploy_servers
+  become: true
+  roles:
+  - common
+  - deploy
