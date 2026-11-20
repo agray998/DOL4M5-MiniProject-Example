@@ -8,7 +8,7 @@ output "key" {
 }
 
 resource "local_sensitive_file" "keyfile" {
-  filename = "${path.root}/{var.key_name}.pem"
+  filename = "${path.root}/${var.key_name}.pem"
   content = tls_private_key.pk.private_key_pem
   file_permission = "0600"
 }
